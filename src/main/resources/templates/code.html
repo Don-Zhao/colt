@@ -1,0 +1,57 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{common::head('Home')}"></head>
+  <script type="text/javascript" th:src="@{/js/code.js}"></script>
+  <body>
+  	  <div th:replace="~{common::header('colt System')}"></div>
+      <div class="content">
+      	<div style="text-align: center;">
+      		<h1>获取验证码</h1>
+      		<form th:action="@{/user/checkCaptcha}" method="POST">
+	      		<table class="register-table" th:object="${codeViewModel}">
+	      			<tr></tr>
+	      			<tr>
+	      				<td class="title-td">
+	      					<label for="email">邮箱</label>
+	      				</td>
+	      				<td class="content-td">
+	      					<input type="text" name="email" id="email" th:value="*{email}" placeholder="邮箱" />
+	      					
+	      				</td>
+	      				<td class="content-td">
+	      					<input type="button" id="getCode" value="获取验证码">
+	      				</td>
+	      			</tr>
+	      			<tr th:if="${#fields.hasErrors('email')}" class="error-tr">
+	      				<td></td>
+	      				<td class="error-td">
+	      					*<span th:errors="*{email}">Name Error</span>
+	      				</td>
+	      			</tr>
+	      			<tr>
+	      				<td class="title-td">
+	      					<label for="code">验证码</label>
+	      				</td>
+	      				<td class="content-td">
+	      					<input type="text" name="code" id="code" th:value="*{code}" placeholder="请输入验证码" />
+	      				</td>
+	      			</tr>
+	      			<tr th:if="${#fields.hasErrors('code')}" class="error-tr">
+	      				<td></td>
+	      				<td class="error-td">
+	      					*<span th:errors="*{code}">Name Error</span>
+	      				</td>
+	      			</tr>
+	      			<tr>
+	      				<td colspan="3">
+	      					<input type="submit" value="提交">
+	      				</td>
+	      			</tr>
+	      		</table>
+      		</form>
+      	</div>
+      </div>
+      <div th:replace="~{common::footer}"></div>
+  </body>
+</html> 

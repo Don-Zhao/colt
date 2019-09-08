@@ -1,0 +1,60 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{common::head('Home')}"></head>
+  <body>
+  	  <div th:replace="~{common::header('Seckill System')}"></div>
+      <div class="content" style="height: auto; text-align: center">
+      	<h1>商品列表</h1>
+      	<br />
+      	<div th:if="${items} == null" style="text-align: center; width: 70%; margin: 0 auto;">
+      		<p th:text="${errorMsg}"></p>
+      	</div>
+      	<div th:if="${items} != null" style="text-align: center; width: 70%; margin: 0 auto;">
+      		<div th:each="item : ${items}" th:object="${item}" style="margin-bottom: 20px;">
+	      		<table class="goods">
+	      			<tr>
+	      				<td rowspan="4" style="width: 100px;">
+	      					<img th:src="@{*{img}}" width="100px" height="150px"/>
+	      				</td>
+	      				<td class="good-des" colspan="2">
+	      					<span class="good-title">商品名称:</span>
+	      					<span th:text="*{name}" class="good-content">商品姓名</span>
+	      				</td>
+	      				<td rowspan="4" style="width:250px;" >
+	      					<a th:href="@{/item/details(itemId=*{id})}">
+	      						<input type="button" value="商品详情">
+	      					</a>
+	      				</td>
+	      			</tr>
+	      			<tr>
+	      				<td class="good-des" colspan="2">
+	      					<span class="good-title">商品描述:</span>
+	      					<span th:text="*{description}" class="good-content">商品姓名</span>
+	      				</td>
+	      			</tr>
+	      			<tr>
+	      				<td class="good-des" colspan="2">
+	      					<span class="good-title">商品价格:</span>
+	      					<span th:text="*{price}" class="good-content">商品姓名</span>
+	      				</td>
+	      			</tr>
+	      			<tr>
+	      				<td class="good-des">
+	      					<span class="good-title">库存:</span>
+	      					<span th:text="*{stock}" class="good-content">商品姓名</span>
+	      				</td>
+	      				<td class="good-des">
+	      					<span class="good-title">销量:</span>
+	      					<span th:text="*{sales}" class="good-content">商品姓名</span>
+	      				</td>
+	      			</tr>
+	      		</table>
+	      		<br />
+	      		<hr />
+      		</div>
+      	</div>
+      </div>
+      <div th:replace="~{common::footer}"></div>
+  </body>
+</html> 

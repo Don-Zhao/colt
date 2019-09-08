@@ -1,0 +1,22 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{common::head('Home')}"></head>
+  <body>
+  	  <div th:replace="~{common::header('Seckill System')}"></div>
+      <div class="content">
+      	<div style="text-align: center;">
+      		<h1>提示信息</h1>
+      		<table class="register-table">
+      			<tr></tr>
+			  	<tr>
+			    	<td>
+			    		<p>你已经登录成功了</p>
+			    	</td>
+			  	</tr>
+			</table>
+      	</div>
+      </div>
+      <div th:replace="~{common::footer}"></div>
+  </body>
+</html> 

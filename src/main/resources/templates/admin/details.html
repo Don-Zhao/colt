@@ -1,0 +1,137 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{common::head('Home')}"></head>
+  <script type="text/javascript">
+  	$(document).ready(function(){
+  		var startTime = new Date($("#start").val()).getTime();
+  		var now = new Date().getTime();
+  		var distance = (startTime - now) % 1000;
+  		
+  		var t1 = window.setInterval(function(){
+  			$("#leftTime").html("剩余时间：" + distance + "秒");
+  			if (distance == 0) {
+  				window.clearInterval(t1);
+  				$("#target").val("秒      杀");
+  			}
+  			distance--;
+  		}, 1000);
+  		
+  		$("#addCart").click(function(){
+  			$.ajax({
+  				type: "POST",
+  				contentType: "application/x-www-form-urlencoded",
+  				url: "http://localhost:8080/item/addCart",
+  				data:{
+  					itemId: $("#itemId").val(),
+  					price: $("#price").val()
+  				},
+  				success: function(data) {
+  					if (data.status == "success") {
+  						alert("已经加入购物车");
+  					} else if (data.status == "NOT_LOGIN") {
+  						alert("没有登录，请先登录");
+  						window.location = "http://localhost:8080/user/toLogin";
+  					}
+  				},
+  				error: function(data) {
+  					alert("加入购物车失败，请重新操作");
+  				}
+  			});
+  		});
+  	});
+  </script>
+  <body>
+  	  <div th:replace="~{common::header('Seckill System')}"></div>
+      <div class="content" style="height: auto; text-align: center">
+      	<h1>商品列表</h1>
+      	<br />
+      	<div style="text-align: center; width: 70%; margin: 0 auto;">
+      		<div th:if="${itemViewModel} == null" 
+      		style="margin-bottom: 20px;">
+      			<p th:text="${errorMsg}"></p>
+      		</div>
+      		<div th:if="${itemViewModel} != null" th:object="${itemViewModel}" style="margin-bottom: 20px;">
+      			<p style="color: red;" th:if="*{exist}" th:text="|*{promoName}活动时间: *{#dates.format(startTime, 'yyyy-mm-dd HH:mm:ss')} ~ *{#dates.format(endTime, 'yyyy-mm-dd HH:mm:ss')}|">
+      			
+      			</p>
+      			<div th:if="*{exist}">
+      				<input type="hidden" th:value="*{startTime}" name="start" id="start" />
+	      			<span th:if="*{!on}" id="leftTime" style="color: red;"></span>
+      			</div>
+      			<br /><br />
+	      		<table class="goods">
+	      			<tr>
+	      				<td rowspan="4" style="width: 100px;">
+	      					<img th:src="@{*{img}}" width="100px" height="150px"/>
+	      				</td>
+	      				<td class="good-des" colspan="2">
+	      					<span class="good-title">商品名称:</span>
+	      					<span th:text="*{name}" class="good-content">商品姓名</span>
+	      				</td>
+	      				<td rowspan="4" style="width:250px;" >
+	      					<a th:href="@{/item/buy(itemId=*{id})}">
+	      						<input th:if="*{!on}" type="button" id="target" value="购 买 商 品">
+	      						<input th:if="*{on}" type="button"  value="秒         杀">
+	      					</a>
+	      					<br /><br />
+	      					<a id="addCart">
+	      						<input type="hidden" name="itemId" id="itemId" th:value="*{id}" />
+	      						<input type="hidden" name="price" id="price" th:value="*{price}" />
+	      						<input type="button" value="加入购物车">
+	      					</a>
+	      				</td>
+	      				
+	      			</tr>
+	      			<tr>
+	      				<td class="good-des" colspan="2">
+	      					<span class="good-title">商品描述:</span>
+	      					<span th:text="*{description}" class="good-content">商品姓名</span>
+	      				</td>
+	      			</tr>
+	      			<tr>
+	      				<td class="good-des">
+	      					<div th:if="*{!on}">
+		      					<span class="good-title">商品价格:</span>
+		      					<span th:text="*{price}" class="good-content">商品姓名</span>
+	      					</div>
+	      					<div th:if="*{on}">
+		      					<span class="good-title" style="color: red;">秒杀价:</span>
+		      					<span style="color: red;" th:text="*{promoPrice}" class="good-content">商品姓名</span>
+	      					</div>
+	      				</td>
+	      				<td class="good-des" th:if="*{exist}" >
+	      					<div th:if="*{!on}">
+		      					<span class="good-title" style="color: red;">秒杀价:</span>
+		      					<span style="color: red;" th:text="*{promoPrice}" class="good-content">商品姓名</span>
+	      					</div>
+	      				</td>
+	      			</tr>
+	      			<tr>
+	      				<td class="good-des">
+	      					<span class="good-title">商品库存:</span>
+	      					<span th:text="*{stock}" class="good-content">商品姓名</span>
+	      				</td>
+	      				<td class="good-des">
+	      					<span class="good-title">商品库存:</span>
+	      					<span th:text="*{sales}" class="good-content">商品姓名</span>
+	      				</td>
+	      			</tr>
+	      		</table>
+	      		<br />
+	      		<hr />
+	      		<br>
+	      		<div style="margin-bottom: 20px;">
+	      			<img th:src="@{*{img}}" width="500px" height="600px">
+	      			<br />
+	      			<img th:src="@{*{img}}" width="500px" height="600px">
+	      			<br />
+	      			<img th:src="@{*{img}}" width="500px" height="600px">
+	      			<br />
+	      		</div>
+      		</div>
+      	</div>
+      </div>
+      <div th:replace="~{common::footer}"></div>
+  </body>
+</html> 

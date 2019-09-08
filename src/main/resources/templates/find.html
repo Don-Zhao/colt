@@ -1,0 +1,44 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{common::head('Home')}"></head>
+  <script type="text/javascript" th:src="@{/js/getopt.js}"></script>
+  <body>
+  	  <div th:replace="~{common::header('Seckill System')}"></div>
+      <div class="content">
+      	<div style="text-align: center;">
+      		<h1>用户登录</h1>
+      		<form th:action="@{/user/find}" method="POST">
+	      		<table class="register-table" th:object="${findViewModel}">
+	      			<tr></tr>
+	      			<tr>
+	      				<td class="title-td">
+	      					<label for="email">找回密码电话<span class="mark">*</span></label>
+	      				</td>
+	      				<td class="content-td">
+	      					<input type="text" name="email" id="email" th:value="*{email}"/>
+	      				</td>
+	      			</tr>
+	      			<tr th:if="${#fields.hasErrors('email')}" class="error-tr">
+	      				<td></td>
+	      				<td class="error-td">
+	      					*<span th:errors="*{email}">Name Error</span>
+	      				</td>
+	      			</tr>
+	      			<tr class="error-tr">
+	      				<td colspan="3">
+	      					<p class="errMsg" th:if="${errorMsg} != null" th:text="${errorMsg}">错误信息</p>
+	      				</td>
+	      			</tr>
+	      			<tr>
+	      				<td colspan="2">
+	      					<input type="submit" value="找回密码">
+	      				</td>
+	      			</tr>
+	      		</table>
+      		</form>
+      	</div>
+      </div>
+      <div th:replace="~{common::footer}"></div>
+  </body>
+</html> 

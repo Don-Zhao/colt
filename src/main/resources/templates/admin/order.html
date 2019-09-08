@@ -1,0 +1,57 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{common::head('Home')}"></head>
+  <body>
+  	  <div th:replace="~{common::header('Seckill System')}"></div>
+      <div class="content" style="height: auto; text-align: center">
+      	<h1>订单</h1>
+      	<br />
+      	<div th:if="${cartViewModel} == null" style="text-align: center; width: 70%; margin: 0 auto;">
+      		<p th:text="${errorMsg}"></p>
+      	</div>
+      	<form th:action="@{/item/pay}" method="post">
+      	
+      	<div th:if="${cartViewModel} != null" style="text-align: center; width: 70%; margin: 0 auto;">
+      		<div style="text-align: left;">
+      			订单编号：<span th:text="${orderId}"></span>
+      			<input type="hidden" th:value="${orderId}" name="orderId" id="orderId"/>
+      		</div>
+      		<div th:each="item,stat : ${cartViewModel.items}" th:object="${item}" style="margin-bottom: 20px;">
+	      		<table class="goods">
+	      			<tr>
+	      				<td style="width: 100px;">
+	      					<p th:text="${stat.count}"></p>
+	      				</td>
+	      				<td style="width: 100px;">
+	      					<p th:text="${item.itemViewModel.name}"></p>
+	      				</td>
+	      				<td style="width: 100px;">
+	      					<img th:src="@{${item.itemViewModel.img}}" width="80px" height="100px"/>
+	      				</td>
+	      				<td style="width: 100px;">
+	      					<p th:text="${item.count}"></p>
+	      				</td>
+	      				<td style="width: 100px;">
+	      					<p th:text="${item.price}"></p>
+	      				</td>
+	      			</tr>
+	      		</table>
+	      		<br />
+	      		<hr />
+      		</div>
+      		<br />
+      		
+      		<div style="height:50px; text-align: right;">
+      			总价：<span th:text="${cartViewModel.balance}" id="totalPrice"></span>元
+      			<input type="hidden" th:value="${cartViewModel.balance}" name="accountPrice" id="accountPrice"/>
+      		</div>
+      		<div style="height:50px; text-align: right;">
+      			<input type="submit" value="付款" />
+      		</div>
+      	</div>
+      	</form>
+      </div>
+      <div th:replace="~{common::footer}"></div>
+  </body>
+</html> 

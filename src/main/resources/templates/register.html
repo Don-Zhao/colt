@@ -1,0 +1,93 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{common::head('Home')}"></head>
+  <script type="text/javascript" th:src="@{/js/getopt.js}"></script>
+  <body>
+  	  <div th:replace="~{common::header('Seckill System')}"></div>
+      <div class="content">
+      	<div style="text-align: center;">
+      		<h1>用户注册</h1>
+      		<form th:action="@{/user/register}" method="POST">
+	      		<table class="register-table" th:Object="${userViewModel}">
+	      			<tr>
+	      				<td class="title-td">
+	      					<label for="email">手机号</label>
+	      				</td>
+	      				<td class="content-td">
+	      					<input type="text" name="email" id="email" th:value="*{email}" readonly="readonly"/>
+	      				</td>
+	      			</tr>
+	      			<tr>
+	      				<td class="title-td">
+	      					<label for="name">用户名</label>
+	      				</td>
+	      				<td class="content-td">
+	      					<input type="text" name="name" id="name" th:value="*{name}" placeholder="请输入用户名" />
+	      				</td>
+	      			</tr>
+	      			<tr th:if="${#fields.hasErrors('name')}" class="error-tr">
+	      				<td></td>
+	      				<td class="error-td">
+	      					*<span th:errors="*{name}">Name Error</span>
+	      				</td>
+	      			</tr>
+	      			<tr>
+	      				<td class="title-td">
+	      					<label for="age">年龄</label>
+	      				</td>
+	      				<td class="content-td">
+	      					<input type="text" name="age" id="age" th:value="*{age}" placeholder="请输入年龄" />
+	      				</td>
+	      			</tr>
+	      			<tr th:if="${#fields.hasErrors('age')}" class="error-tr">
+	      				<td></td>
+	      				<td class="error-td">
+	      					*<span th:errors="*{age}">Name Error</span>
+	      				</td>
+	      			</tr>
+	      			<tr>
+	      				<td class="title-td">
+	      					<label for="password">密码</label>
+	      				</td>
+	      				<td class="content-td">
+	      					<input type="text" name="password" id="password" th:value="*{password}" placeholder="请输入密码" />
+	      				</td>
+	      			</tr>
+	      			<tr th:if="${#fields.hasErrors('password')}" class="error-tr">
+	      				<td></td>
+	      				<td class="error-td">
+	      					*<span th:errors="*{password}">Name Error</span>
+	      				</td>
+	      			</tr>
+	      			<tr>
+	      				<td class="title-td">
+	      					<label for="confirmPassword">确认密码</label>
+	      				</td>
+	      				<td class="content-td">
+	      					<input type="text" name="confirmPassword" id="confirmPassword" th:value="*{confirmPassword}" placeholder="请输入确认密码" />
+	      				</td>
+	      			</tr>
+	      			<tr th:if="${#fields.hasErrors('confirmPassword')}" class="error-tr">
+	      				<td></td>
+	      				<td class="error-td">
+	      					*<span th:errors="*{confirmPassword}">Name Error</span>
+	      				</td>
+	      			</tr>
+	      			<tr th:if="${errorMsg} != null" class="error-tr">
+	      				<td colspan="3">
+	      					<p class="errMsg" th:text="${errorMsg}">错误信息</p>
+	      				</td>
+	      			</tr>
+	      			<tr>
+	      				<td colspan="2">
+	      					<input type="submit" value="提交">
+	      				</td>
+	      			</tr>
+	      		</table>
+      		</form>
+      	</div>
+      </div>
+      <div th:replace="~{common::footer}"></div>
+  </body>
+</html> 

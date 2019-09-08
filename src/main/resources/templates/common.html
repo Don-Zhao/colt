@@ -1,0 +1,48 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+      
+    <!--  -->
+	<head th:fragment="head(title)">
+		<title th:text="${title}"></title>
+		<meta charset="UTF-8">
+		<script type="text/javascript" src="/js/jquery-3.2.1.min.js" th:src="@{/js/jquery-3.2.1.min.js}"></script>
+		<link rel="stylesheet" type="text/css" href="/css/common.css" th:href="@{/css/common.css}">
+	</head>
+	<!--  -->
+	<div th:fragment="header(system)">
+		<div class="header">
+			<div class="right" th:text="${system}">
+				Spring Boot Test System
+			</div>
+		</div>
+		<menu>
+			<div th:if="${#session} != null ? ${session.isLogin} : false">
+				<ul>
+					<li>
+						<a th:href="@{/user/logout}">退出</a>
+					</li>
+					<li>
+						<a th:href="@{/item/getCart}">购物车</a>
+					</li>
+					<li>
+						<a th:href="@{/item/list}">商城商品</a>
+					</li>
+					<li>
+						<a th:href="@{/item/toRecord}">添加商品</a>
+					</li>
+				</ul>
+			</div>
+			<!--  
+			<div th:if="${#session} != null">
+				<div th:if="${#session.isLogin}" th:text="${#session.user_auth_details.name}"></div>
+			</div>
+			-->
+		</menu>
+	</div>
+	
+	<!--  -->
+	<footer th:fragment="footer">
+		<div></div>
+	</footer>
+</html> 
